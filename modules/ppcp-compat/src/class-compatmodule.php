@@ -37,6 +37,11 @@ class CompatModule implements ModuleInterface {
 	 * @param ContainerInterface|null $container The Container.
 	 */
 	public function run( ContainerInterface $container ): void {
+
+		if ( $this->is_ppec_available() ) {
+			return;
+		}
+
 	}
 
 	/**
@@ -46,4 +51,14 @@ class CompatModule implements ModuleInterface {
 	 */
 	public function getKey() {
 	}
+
+	/**
+	 * Checks whether the PayPal (Express) Checkout extension is active and configured.
+	 *
+	 * @return boolean
+	 */
+	private function is_ppec_available() {
+		return is_callable( 'wc_gateway_ppec' ) && wc_gateway_ppec()->settings->get_active_api_credentials();
+	}
+
 }
