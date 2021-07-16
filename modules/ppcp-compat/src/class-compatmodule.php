@@ -42,6 +42,12 @@ class CompatModule implements ModuleInterface {
 			return;
 		}
 
+		// Process PPEC subscription renewals through PayPal Payments.
+		if ( apply_filters( 'woocommerce_paypal_payments_process_legacy_subscriptions', true ) ) {
+			$handler = $container->get( 'compat.ppec.subscriptions-handler' );
+			$handler->maybe_hook();
+		}
+
 	}
 
 	/**
